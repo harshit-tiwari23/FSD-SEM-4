@@ -1,0 +1,40 @@
+// write an express.js script to load an HTML file having username and 
+// password and submit button. On clicking submit button. It should 
+// jump on "check" page using "POST" method. If username is "admin" 
+// , then jump on next middleware to print "welcome… admin" , if 
+// username is not "admin" , then stay on same middleware to print 
+// "warning msg" in red color.
+
+const express = require("express");
+const app = express();
+
+app.use(express.urlencoded({extended:true}));
+
+const check= (req,res,next)=>{
+   
+    if(req.uname == "admin"){
+        
+    next();
+
+    }else{
+        console.log("Warning he bhaiiii")
+    }
+}
+
+
+app.get("/",(req,res)=>{
+    res.send(`
+            <h1> User Form</h1. <br>
+            <form action="/user" method="post">
+                <input type = "text" name= "uname"/>
+                <input type = "password" name= "pass"/>
+                <button type="submit">Click me</button>
+
+        `)
+
+
+})
+
+app.post('/user',check,(req, res) => {
+   res.send("You are an aminnnnnnnn")
+}).listen(3030, console.log('Running'));
